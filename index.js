@@ -3,19 +3,21 @@ const displayController = (function() {
     const tableSquares = document.querySelectorAll(".board div");
     let turnOf = 1;
 
-    tableSquares.forEach(square => {
-        square.addEventListener("click", function(el) {
-            console.log(el.target.className);
-            if (turnOf === 1) {
-                player1.putMark(el.target.className);
-                turnOf = 2;
-            } else {
-                player2.putMark(el.target.className);
-                turnOf = 1;
-            };
-
+    function updateBoard() {
+        tableSquares.forEach((square, index) => {
+            square.addEventListener("click", function(el) {
+                if (turnOf === 1 && el.target.innerText === "") {
+                    player1.putMark(index);
+                    turnOf = 2;
+                } else if (turnOf === 2 && el.target.innerText === "") {
+                    player2.putMark(index);
+                    turnOf = 1;
+                };
+            });
         });
-    })
+    };
+
+    updateBoard();
 
     const displayUpdatedBoard = function(newBoard) {
         console.log(newBoard);
@@ -45,23 +47,22 @@ const Gameboard = (function() {
     // ];
 
     const initialBoard = [
-        "X", "O", "X",
-        "O", "X", "X",
-        "X", "O", "O"
+        "", "", "",
+        "", "", "",
+        "", "", ""
     ];
 
     displayController.callDisplayUpdatedBoard(initialBoard);
 
-    const updateBoard = function(mark, onSquare) {
-        
-        console.log(mark, onSquare);
-        
-        
+    const updateBoard = function(mark, squareIndex) {
+        console.log(mark, squareIndex);
+        initialBoard[squareIndex] = mark;
+        displayController.callDisplayUpdatedBoard(initialBoard);
     };
 
     return {
-    callUpdateBoard: function(mark, onSquare) {
-        updateBoard(mark, onSquare);
+    callUpdateBoard: function(mark, squareIndex) {
+        updateBoard(mark, squareIndex);
     }
     };
 
@@ -72,8 +73,8 @@ Gameboard.callUpdateBoard();       // Outputs: 'contents'
 
 
 const playerFactory = (mark) => {
-    const putMark = (onSquare) => {
-        Gameboard.callUpdateBoard(mark, onSquare);
+    const putMark = (squareIndex) => {
+        Gameboard.callUpdateBoard(mark, squareIndex);
     };
     return { mark, putMark };
 };
