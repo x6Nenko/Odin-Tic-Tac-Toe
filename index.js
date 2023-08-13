@@ -1,57 +1,5 @@
-const Gameboard = (function() {
-    const contents = 'contents';
-
-    const initialBoard = [
-        "top-left", "top-middle", "top-right",
-        "middle-left", "middle-middle", "middle-right",
-        "bottom-left", "bottom-middle", "bottom-right"
-    ];
-
-    const updatedBoard = [...initialBoard];
-
-    const updateBoard = function(mark, onSquare) {
-        console.log(updatedBoard);
-        console.log(mark, onSquare);
-        updatedBoard.forEach((square, index) => {
-            if (square === onSquare) {
-                square[index] = onSquare
-            };
-        });
-    };
-
-    return {
-    callUpdateBoard: function(mark, onSquare) {
-        updateBoard(mark, onSquare);
-        console.log(contents);
-    }
-    };
-
-})();
-
-
-
-Gameboard.callUpdateBoard();       // Outputs: 'contents'
-console.log(Gameboard.board);  // undefined
-
-
-const playerFactory = (mark) => {
-    const putMark = (onSquare) => {
-        Gameboard.callUpdateBoard(mark, onSquare);
-    };
-    return { mark, putMark };
-};
-
-const player1 = playerFactory('X');
-const player2 = playerFactory('O');
-
-player1.putMark();
-player2.putMark();
-
-console.log(player1);
-
-
-
 const displayController = (function() {
+
     const tableSquares = document.querySelectorAll(".board div");
     let turnOf = 1;
 
@@ -69,19 +17,76 @@ const displayController = (function() {
         });
     })
 
-    const check = function() {
-        console.log(tableSquares);
-    }
+    const displayUpdatedBoard = function(newBoard) {
+        console.log(newBoard);
+        tableSquares.forEach((square, index) => {
+            console.log(newBoard[index]);
+            square.innerText = newBoard[index];
+        });
+    };
 
     return {
-    callCheck: function() {
-        check();
+    callDisplayUpdatedBoard: function(newBoard) {
+        displayUpdatedBoard(newBoard);
     }
     };
 
 })();
 
-displayController.callCheck();
+// displayController.callDisplayUpdatedBoard();
+
+
+
+const Gameboard = (function() {
+    // const initialBoard = [
+    //     "top-left", "top-middle", "top-right",
+    //     "middle-left", "middle-middle", "middle-right",
+    //     "bottom-left", "bottom-middle", "bottom-right"
+    // ];
+
+    const initialBoard = [
+        "X", "O", "X",
+        "O", "X", "X",
+        "X", "O", "O"
+    ];
+
+    displayController.callDisplayUpdatedBoard(initialBoard);
+
+    const updateBoard = function(mark, onSquare) {
+        
+        console.log(mark, onSquare);
+        
+        
+    };
+
+    return {
+    callUpdateBoard: function(mark, onSquare) {
+        updateBoard(mark, onSquare);
+    }
+    };
+
+})();
+
+Gameboard.callUpdateBoard();       // Outputs: 'contents'
+
+
+
+const playerFactory = (mark) => {
+    const putMark = (onSquare) => {
+        Gameboard.callUpdateBoard(mark, onSquare);
+    };
+    return { mark, putMark };
+};
+
+const player1 = playerFactory('X');
+const player2 = playerFactory('O');
+
+player1.putMark();
+player2.putMark();
+
+
+
+
 
 // Modules:
 // Gameboard (boardArray)
