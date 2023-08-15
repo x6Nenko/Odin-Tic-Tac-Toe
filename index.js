@@ -3,9 +3,23 @@ const displayController = (function() {
     const tableSquares = document.querySelectorAll(".board div");
     let turnOf = 1;
 
+    function setUserName() {
+        const userName1 = document.getElementById("userName1");
+        const userName2 = document.getElementById("userName2");
+
+        userName1.addEventListener("input", function() {
+            player1.userName = userName1.value;
+        });
+
+        userName2.addEventListener("input", function() {
+            player2.userName = userName2.value;
+        });
+    };
+
+    setUserName();
+
     function checkTheWinner(currentBoard) {
         let usedAmountOfSquares = 0;
-        console.log(currentBoard);
         (currentBoard[0] !== "" && currentBoard[0] === currentBoard[1] && currentBoard[1] === currentBoard[2]) ? console.log("Winner!") : null;
         (currentBoard[3] !== "" && currentBoard[3] === currentBoard[4] && currentBoard[4] === currentBoard[5]) ? console.log("Winner!") : null;
         (currentBoard[6] !== "" && currentBoard[6] === currentBoard[7] && currentBoard[7] === currentBoard[8]) ? console.log("Winner!") : null;
@@ -45,9 +59,7 @@ const displayController = (function() {
     updateBoard();
 
     const displayUpdatedBoard = function(newBoard) {
-        console.log(newBoard);
         tableSquares.forEach((square, index) => {
-            console.log(newBoard[index]);
             square.innerText = newBoard[index];
         });
     };
@@ -78,7 +90,6 @@ const Gameboard = (function() {
     displayController.callDisplayUpdatedBoard(initialBoard);
 
     const updateBoard = function(mark, squareIndex) {
-        console.log(mark, squareIndex);
         initialBoard[squareIndex] = mark;
         displayController.callDisplayUpdatedBoard(initialBoard);
         displayController.callCheckTheWinner(initialBoard);
@@ -96,18 +107,16 @@ Gameboard.callUpdateBoard();       // Outputs: 'contents'
 
 
 
-const playerFactory = (mark) => {
+const playerFactory = (userName, mark) => {
     const putMark = (squareIndex) => {
         Gameboard.callUpdateBoard(mark, squareIndex);
     };
-    return { mark, putMark };
+    return { userName, mark, putMark };
 };
 
-const player1 = playerFactory('X');
-const player2 = playerFactory('O');
+const player1 = playerFactory("Rocky", "X");
+const player2 = playerFactory("Milky Way", "O");
 
-player1.putMark();
-player2.putMark();
 
 
 
