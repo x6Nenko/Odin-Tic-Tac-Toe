@@ -18,6 +18,20 @@ const displayController = (function() {
 
     setUserName();
 
+    function restartGame() {
+        const restartBtn = document.getElementById("restartBtn");
+
+        restartBtn.addEventListener("click", function() {
+            tableSquares.forEach((square, index) => {
+                Gameboard.callUpdateBoard("", index);
+            });
+
+            turnOf = 1;
+        });
+    };
+
+    restartGame();
+
     function checkTheWinner(currentBoard) {
         let usedAmountOfSquares = 0;
         (currentBoard[0] !== "" && currentBoard[0] === currentBoard[1] && currentBoard[1] === currentBoard[2]) ? console.log("Winner!") : null;
