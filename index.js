@@ -1,6 +1,7 @@
 const displayController = (function() {
 
     const tableSquares = document.querySelectorAll(".board div");
+    const announceResultElement = document.getElementById("announceResult");
     let turnOf = 1;
 
     function setUserName() {
@@ -27,6 +28,7 @@ const displayController = (function() {
             });
 
             turnOf = 1;
+            announceResultElement.innerText = "";
         });
     };
 
@@ -34,26 +36,32 @@ const displayController = (function() {
 
     function checkTheWinner(currentBoard) {
         let usedAmountOfSquares = 0;
-        (currentBoard[0] !== "" && currentBoard[0] === currentBoard[1] && currentBoard[1] === currentBoard[2]) ? console.log("Winner!") : null;
-        (currentBoard[3] !== "" && currentBoard[3] === currentBoard[4] && currentBoard[4] === currentBoard[5]) ? console.log("Winner!") : null;
-        (currentBoard[6] !== "" && currentBoard[6] === currentBoard[7] && currentBoard[7] === currentBoard[8]) ? console.log("Winner!") : null;
-        (currentBoard[0] !== "" && currentBoard[0] === currentBoard[3] && currentBoard[3] === currentBoard[6]) ? console.log("Winner!") : null;
-        (currentBoard[1] !== "" && currentBoard[1] === currentBoard[4] && currentBoard[4] === currentBoard[7]) ? console.log("Winner!") : null;
-        (currentBoard[2] !== "" && currentBoard[2] === currentBoard[5] && currentBoard[5] === currentBoard[8]) ? console.log("Winner!") : null;
-        (currentBoard[0] !== "" && currentBoard[0] === currentBoard[4] && currentBoard[4] === currentBoard[8]) ? console.log("Winner!") : null;
-        (currentBoard[2] !== "" && currentBoard[2] === currentBoard[4] && currentBoard[4] === currentBoard[6]) ? console.log("Winner!") : null;
+        (currentBoard[0] !== "" && currentBoard[0] === currentBoard[1] && currentBoard[1] === currentBoard[2]) ? announceTheResult(currentBoard[0]) : 
+        (currentBoard[3] !== "" && currentBoard[3] === currentBoard[4] && currentBoard[4] === currentBoard[5]) ? announceTheResult(currentBoard[3]) : 
+        (currentBoard[6] !== "" && currentBoard[6] === currentBoard[7] && currentBoard[7] === currentBoard[8]) ? announceTheResult(currentBoard[6]) : 
+        (currentBoard[0] !== "" && currentBoard[0] === currentBoard[3] && currentBoard[3] === currentBoard[6]) ? announceTheResult(currentBoard[0]) : 
+        (currentBoard[1] !== "" && currentBoard[1] === currentBoard[4] && currentBoard[4] === currentBoard[7]) ? announceTheResult(currentBoard[1]) : 
+        (currentBoard[2] !== "" && currentBoard[2] === currentBoard[5] && currentBoard[5] === currentBoard[8]) ? announceTheResult(currentBoard[2]) : 
+        (currentBoard[0] !== "" && currentBoard[0] === currentBoard[4] && currentBoard[4] === currentBoard[8]) ? announceTheResult(currentBoard[0]) : 
+        (currentBoard[2] !== "" && currentBoard[2] === currentBoard[4] && currentBoard[4] === currentBoard[6]) ? announceTheResult(currentBoard[2]) : null;
 
         currentBoard.forEach(square => {
             square !== "" ? usedAmountOfSquares += 1 : null;
         });
 
         if (usedAmountOfSquares === 9) {
-            return console.log("Draw");
+            return announceTheResult("draw");
         } else {
             usedAmountOfSquares = 0
         };
 
         // 0 1 2 , 3 4 5 , 6 7 8 , 0 3 6 , 1 4 7 , 2 5 8 , 0 4 8 , 2 4 6
+    };
+
+    function announceTheResult(result) {
+        result === "draw" ? announceResultElement.innerText = `It's a draw!` :
+        result === "X" ? announceResultElement.innerText = `${player1.userName } has won!` :
+        result === "O" ? announceResultElement.innerText = `${player2.userName } has won!` : null;
     };
 
     function updateBoard() {
