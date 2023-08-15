@@ -3,6 +3,31 @@ const displayController = (function() {
     const tableSquares = document.querySelectorAll(".board div");
     let turnOf = 1;
 
+    function checkTheWinner(currentBoard) {
+        let usedAmountOfSquares = 0;
+        console.log(currentBoard);
+        (currentBoard[0] !== "" && currentBoard[0] === currentBoard[1] && currentBoard[1] === currentBoard[2]) ? console.log("Winner!") : null;
+        (currentBoard[3] !== "" && currentBoard[3] === currentBoard[4] && currentBoard[4] === currentBoard[5]) ? console.log("Winner!") : null;
+        (currentBoard[6] !== "" && currentBoard[6] === currentBoard[7] && currentBoard[7] === currentBoard[8]) ? console.log("Winner!") : null;
+        (currentBoard[0] !== "" && currentBoard[0] === currentBoard[3] && currentBoard[3] === currentBoard[6]) ? console.log("Winner!") : null;
+        (currentBoard[1] !== "" && currentBoard[1] === currentBoard[4] && currentBoard[4] === currentBoard[7]) ? console.log("Winner!") : null;
+        (currentBoard[2] !== "" && currentBoard[2] === currentBoard[5] && currentBoard[5] === currentBoard[8]) ? console.log("Winner!") : null;
+        (currentBoard[0] !== "" && currentBoard[0] === currentBoard[4] && currentBoard[4] === currentBoard[8]) ? console.log("Winner!") : null;
+        (currentBoard[2] !== "" && currentBoard[2] === currentBoard[4] && currentBoard[4] === currentBoard[6]) ? console.log("Winner!") : null;
+
+        currentBoard.forEach(square => {
+            square !== "" ? usedAmountOfSquares += 1 : null;
+        });
+
+        if (usedAmountOfSquares === 9) {
+            return console.log("Draw");
+        } else {
+            usedAmountOfSquares = 0
+        };
+
+        // 0 1 2 , 3 4 5 , 6 7 8 , 0 3 6 , 1 4 7 , 2 5 8 , 0 4 8 , 2 4 6
+    };
+
     function updateBoard() {
         tableSquares.forEach((square, index) => {
             square.addEventListener("click", function(el) {
@@ -30,6 +55,9 @@ const displayController = (function() {
     return {
     callDisplayUpdatedBoard: function(newBoard) {
         displayUpdatedBoard(newBoard);
+    },
+    callCheckTheWinner: function(currentBoard) {
+        checkTheWinner(currentBoard);
     }
     };
 
@@ -40,11 +68,6 @@ const displayController = (function() {
 
 
 const Gameboard = (function() {
-    // const initialBoard = [
-    //     "top-left", "top-middle", "top-right",
-    //     "middle-left", "middle-middle", "middle-right",
-    //     "bottom-left", "bottom-middle", "bottom-right"
-    // ];
 
     const initialBoard = [
         "", "", "",
@@ -58,6 +81,7 @@ const Gameboard = (function() {
         console.log(mark, squareIndex);
         initialBoard[squareIndex] = mark;
         displayController.callDisplayUpdatedBoard(initialBoard);
+        displayController.callCheckTheWinner(initialBoard);
     };
 
     return {
