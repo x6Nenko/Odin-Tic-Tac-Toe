@@ -1,3 +1,15 @@
+const playerFactory = (userName, mark, isAi) => {
+    const putMark = (squareIndex) => {
+        Gameboard.callUpdateBoard(mark, squareIndex);
+    };
+    return { userName, mark, isAi, putMark };
+};
+
+const player1 = playerFactory("Rocky", "X", false);
+const player2 = playerFactory("Milky Way", "O", false);
+
+
+
 const displayController = (function() {
 
     const tableSquares = document.querySelectorAll(".board div");
@@ -20,19 +32,40 @@ const displayController = (function() {
     setUserName();
 
     function setAi() {
-        const userXAi = document.getElementById("isXAi");
-        const userOAi = document.getElementById("isOAi");
+        const userXAiCheckmark = document.getElementById("isXAi");
+        const userOAiCheckmark = document.getElementById("isOAi");
 
-        userXAi.addEventListener("change", function(e) {
+        userXAiCheckmark.addEventListener("change", function(e) {
             player1.isAi = e.target.checked;
         });
 
-        userOAi.addEventListener("change", function(e) {
+        userOAiCheckmark.addEventListener("change", function(e) {
             player2.isAi = e.target.checked;
         });
     };
 
     setAi();
+
+    function aiTurn(player) {
+        let randomIndex = Math.floor(Math.random() * 9);
+        let usedSquares = 0;
+
+        tableSquares.forEach(square => {
+            square.innerText !== "" ? usedSquares += 1 : null;
+        });
+
+        if (usedSquares == 9) {
+            return null;
+        };
+
+        while (tableSquares[randomIndex].innerText !== "") {
+            randomIndex = Math.floor(Math.random() * 9);
+        };
+
+        player.putMark(randomIndex);
+
+        turnOf = 1;
+    };
 
     function restartGame() {
         const restartBtn = document.getElementById("restartBtn");
@@ -85,6 +118,9 @@ const displayController = (function() {
                 if (turnOf === 1 && el.target.innerText === "") {
                     player1.putMark(index);
                     turnOf = 2;
+                    if (player2.isAi) {
+                        return aiTurn(player2);
+                    };
                 } else if (turnOf === 2 && el.target.innerText === "") {
                     player2.putMark(index);
                     turnOf = 1;
@@ -139,40 +175,3 @@ const Gameboard = (function() {
     };
 
 })();
-
-Gameboard.callUpdateBoard();       // Outputs: 'contents'
-
-
-
-const playerFactory = (userName, mark, isAi) => {
-    console.log(userName, mark, isAi);
-    const putMark = (squareIndex) => {
-        Gameboard.callUpdateBoard(mark, squareIndex);
-    };
-    return { userName, mark, isAi, putMark };
-};
-
-const player1 = playerFactory("Rocky", "X", false);
-const player2 = playerFactory("Milky Way", "O", false);
-
-
-
-
-
-
-// Modules:
-// Gameboard (boardArray)
-// 
-// displayController (edit boardArray, edit html Page)
-//
-// Factories:
-// players (create 2 players)
-//
-// 
-// board, player 1, player 2
-// player 1 set X, player 2 set O
-// controll flow: x was set to 1 - change 1 to X. not allowed to re-set already selected squares, check if someone has crossed a full line.
-//
-//
-//
-//
