@@ -19,6 +19,21 @@ const displayController = (function() {
 
     setUserName();
 
+    function setAi() {
+        const userXAi = document.getElementById("isXAi");
+        const userOAi = document.getElementById("isOAi");
+
+        userXAi.addEventListener("change", function(e) {
+            player1.isAi = e.target.checked;
+        });
+
+        userOAi.addEventListener("change", function(e) {
+            player2.isAi = e.target.checked;
+        });
+    };
+
+    setAi();
+
     function restartGame() {
         const restartBtn = document.getElementById("restartBtn");
 
@@ -129,15 +144,16 @@ Gameboard.callUpdateBoard();       // Outputs: 'contents'
 
 
 
-const playerFactory = (userName, mark) => {
+const playerFactory = (userName, mark, isAi) => {
+    console.log(userName, mark, isAi);
     const putMark = (squareIndex) => {
         Gameboard.callUpdateBoard(mark, squareIndex);
     };
-    return { userName, mark, putMark };
+    return { userName, mark, isAi, putMark };
 };
 
-const player1 = playerFactory("Rocky", "X");
-const player2 = playerFactory("Milky Way", "O");
+const player1 = playerFactory("Rocky", "X", false);
+const player2 = playerFactory("Milky Way", "O", false);
 
 
 
