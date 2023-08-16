@@ -1,8 +1,48 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
 body {
+    position: relative;
     display: grid;
     place-content: center;
     height: 100vh;
+    background-color: #212121;
+    color: #CACACA;
+    font-family: 'Inter', sans-serif;
 }
+
+header {
+    margin-bottom: 120px;
+}
+
+button {
+    margin-top: 120px;
+    border: none;
+    display: inline-block;
+    padding: 20px 60px;
+    border-radius: 100px;
+    background: linear-gradient(135deg, #DDD 0%, #7C7C7C 100%);
+    font-family: 'Inter', sans-serif;
+    font-size: 2rem;
+}
+
+.announce-container {
+    display: none;
+    position: absolute;
+    color: #000;
+    background: linear-gradient(135deg, #DDD 0%, #7C7C7C 100%);
+    top: 32%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100%;
+    text-align: center;
+    padding: 20px 0;
+}
+
+/* ====================== Board ====================== */
 
 .board {
     width: 310px;
@@ -13,16 +53,76 @@ body {
 .board div {
     display: grid;
     place-content: center;
-    font-size: 3rem;
+    font-size: 4rem;
     width: 100px;
     height: 100px;
-    border: 1px solid goldenrod;
 }
 
-header {
-    margin-bottom: 50px;
+.middle-middle {
+    border: 1px solid #585858;
 }
 
-button {
-    margin-top: 50px;
+.top-middle, .bottom-middle {
+    border-left: 1px solid #585858;
+    border-right: 1px solid #585858;
+}
+
+.middle-left, .middle-right {
+    border-top: 1px solid #585858;
+    border-bottom: 1px solid #585858;
+}
+
+/* ====================== Inputs ====================== */
+
+.input-container {
+    position: relative;
+}
+
+.input-container:nth-of-type(1) {
+    margin-bottom: 40px;
+}
+
+.x-icon, .o-icon {
+    position: absolute;
+    left: 25px;
+    top: -27px;
+}
+
+.ai-icon {
+    display: none;
+    position: absolute;
+    top: -30px;
+    left: -30px;
+}
+
+input[type="text"] {
+    text-align: center;
+    width: 300px;
+    color: #CACACA;
+    border: none;
+    padding: 5px 10px 5px 20px;
+    font-size: 2rem;
+    border-bottom: 1px solid #585858;
+    outline: none;
+    background: none;
+}
+
+.nick-label {
+    z-index: -1;
+    color: #363636;
+    position: absolute;
+    font-size: 4rem;
+    top: -20px;
+}
+
+.checkbox-container {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    margin-top: 10px;
+}
+
+input[type="checkbox"] {
+    width: 24px;
+    height: 24px;
 }

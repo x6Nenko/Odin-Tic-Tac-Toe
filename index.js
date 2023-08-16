@@ -32,15 +32,14 @@ const displayController = (function() {
     setUserName();
 
     function setAi() {
-        const userXAiCheckmark = document.getElementById("isXAi");
         const userOAiCheckmark = document.getElementById("isOAi");
-
-        userXAiCheckmark.addEventListener("change", function(e) {
-            player1.isAi = e.target.checked;
-        });
+        const aiIcon = document.querySelector(".ai-icon");
+        const oIcon = document.querySelector(".o-icon");
 
         userOAiCheckmark.addEventListener("change", function(e) {
             player2.isAi = e.target.checked;
+            e.target.checked === true ? aiIcon.style.display = "unset" : aiIcon.style.display = "none";
+            e.target.checked === true ? oIcon.style.display = "none" : oIcon.style.display = "unset";
         });
     };
 
@@ -69,6 +68,7 @@ const displayController = (function() {
 
     function restartGame() {
         const restartBtn = document.getElementById("restartBtn");
+        const announceContainer = document.querySelector(".announce-container");
 
         restartBtn.addEventListener("click", function() {
             tableSquares.forEach((square, index) => {
@@ -77,6 +77,7 @@ const displayController = (function() {
 
             turnOf = 1;
             announceResultElement.innerText = "";
+            announceContainer.style.display = "none";
         });
     };
 
@@ -107,6 +108,9 @@ const displayController = (function() {
     };
 
     function announceTheResult(result) {
+        const announceContainer = document.querySelector(".announce-container");
+        announceContainer.style.display = "unset";
+
         result === "draw" ? announceResultElement.innerText = `It's a draw!` :
         result === "X" ? announceResultElement.innerText = `${player1.userName } has won!` :
         result === "O" ? announceResultElement.innerText = `${player2.userName } has won!` : null;

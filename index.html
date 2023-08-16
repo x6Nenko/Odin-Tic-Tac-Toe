@@ -4,34 +4,37 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tic Tac Toe</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <header>
         <div class="user-names">
             <div class="input-container">
-                <label for="userName1">Player X:</label>
+                <label for="userName1" class="nick-label" aria-label="Chose nickname for X user">X</label>
                 <input type="text" name="userName1" id="userName1" value="Rocky">
+                <span class="x-icon"><img src="./assets/xUser.svg" alt="human icon"></span>
             </div>
 
             <div class="input-container">
-                <label for="isXAi">AI:</label>
-                <input type="checkbox" name="isXAi" id="isXAi">
-            </div>
-
-            <div class="input-container">
-                <label for="userName2">Player O:</label>
+                <label for="userName2" class="nick-label" aria-label="Chose nickname for O user">O</label>
                 <input type="text" name="userName2" id="userName2" value="Milky Way">
+                <span class="o-icon"><img src="./assets/oUser.svg" alt="human icon"></span>
+                <span class="ai-icon"><img src="./assets/aiLg.svg" alt="ai icon"></span>
             </div>
 
-            <div class="input-container">
-                <label for="isOAi">AI:</label>
+            <div class="input-container checkbox-container">
+                <label for="isOAi">AI?</label>
                 <input type="checkbox" name="isOAi" id="isOAi">
             </div>
         </div>
-
-        <h1 id="announceResult"></h1>
     </header>
+
+    <div class="announce-container">
+        <h1 id="announceResult"></h1>
+    </div>
 
     <div class="board">
         <div class="top-left"></div>
