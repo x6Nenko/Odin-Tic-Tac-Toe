@@ -6,8 +6,12 @@
 
 body {
     position: relative;
-    display: grid;
-    place-content: center;
+    /* display: grid;
+    place-content: center; */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
     height: 100vh;
     background-color: #212121;
     color: #CACACA;
@@ -15,11 +19,11 @@ body {
 }
 
 header {
-    margin-bottom: 120px;
+    /* margin-bottom: 120px; */
 }
 
 button {
-    margin-top: 120px;
+    /* margin-top: 120px; */
     border: none;
     display: inline-block;
     padding: 20px 60px;
