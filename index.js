@@ -8,13 +8,12 @@ const playerFactory = (userName, mark, isAi) => {
 const player1 = playerFactory("Rocky", "X", false);
 const player2 = playerFactory("Milky Way", "O", false);
 
-
-
 const displayController = (function() {
 
     const tableSquares = document.querySelectorAll(".board div");
     const announceResultElement = document.getElementById("announceResult");
     let turnOf = 1;
+    let isEndGame = false;
 
     function setUserName() {
         const userName1 = document.getElementById("userName1");
@@ -46,6 +45,10 @@ const displayController = (function() {
     setAi();
 
     function aiTurn(player) {
+        if (isEndGame) {
+            return null;
+        };
+
         let randomIndex = Math.floor(Math.random() * 9);
         let usedSquares = 0;
 
@@ -76,6 +79,7 @@ const displayController = (function() {
             });
 
             turnOf = 1;
+            isEndGame = false;
             announceResultElement.innerText = "";
             announceContainer.style.display = "none";
         });
@@ -110,6 +114,7 @@ const displayController = (function() {
     function announceTheResult(result) {
         const announceContainer = document.querySelector(".announce-container");
         announceContainer.style.display = "unset";
+        isEndGame = true;
 
         result === "draw" ? announceResultElement.innerText = `It's a draw!` :
         result === "X" ? announceResultElement.innerText = `${player1.userName } has won!` :
@@ -119,6 +124,10 @@ const displayController = (function() {
     function updateBoard() {
         tableSquares.forEach((square, index) => {
             square.addEventListener("click", function(el) {
+                if (isEndGame) {
+                    return null;
+                };
+
                 if (turnOf === 1 && el.target.innerText === "") {
                     player1.putMark(index);
                     turnOf = 2;
@@ -151,10 +160,6 @@ const displayController = (function() {
     };
 
 })();
-
-// displayController.callDisplayUpdatedBoard();
-
-
 
 const Gameboard = (function() {
 
